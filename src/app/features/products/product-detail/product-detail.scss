@@ -1,0 +1,28 @@
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: 2rem;
+  margin-top: 1rem;
+
+  img {
+    width: 100%;
+    object-fit: contain;
+    background: var(--surface);
+    border-radius: 12px;
+  }
+
+  .category {
+    color: var(--muted);
+  }
+
+  .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 640px) {
+  .detail {
+    grid-template-columns: 1fr;
+  }
+}

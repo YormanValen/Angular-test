@@ -1,0 +1,31 @@
+<h1>Carrito de {{ auth.displayName() }}</h1>
+
+@if (purchased()) {
+  <p class="success">¡Gracias por tu compra! 🎉</p>
+  <a routerLink="/products">Seguir comprando</a>
+} @else {
+  @for (item of cart.entities(); track item.id) {
+    <div class="row">
+      <img [src]="item.thumbnail" [alt]="item.title" />
+      <span class="title">{{ item.title }}</span>
+      <div class="qty">
+        <button (click)="cart.decrement(item.id)">−</button>
+        <span>{{ item.quantity }}</span>
+        <button (click)="cart.add(item)">+</button>
+      </div>
+      <span class="subtotal">{{ item.price * item.quantity | currency: 'USD' }}</span>
+      <button class="link" (click)="cart.remove(item.id)">Quitar</button>
+    </div>
+  } @empty {
+    <p>Tu carrito está vacío. <a routerLink="/products">Ver productos</a></p>
+  }
+
+  @if (cart.totalItems() > 0) {
+    <div class="summary">
+      <p>{{ cart.totalItems() }} artículos</p>
+      <p class="total">Total: {{ cart.totalPrice() | currency: 'USD' }}</p>
+      <button class="link" (click)="cart.clear()">Vaciar carrito</button>
+      <button (click)="checkout()">Pagar</button>
+    </div>
+  }
+}

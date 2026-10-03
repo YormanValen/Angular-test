@@ -1,0 +1,53 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+
+  img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  .title {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .qty {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+      padding: 0.25rem 0.6rem;
+    }
+  }
+
+  .subtotal {
+    font-weight: 600;
+    min-width: 80px;
+    text-align: right;
+  }
+}
+
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+
+  .total {
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+}
+
+.success {
+  font-size: 1.25rem;
+}

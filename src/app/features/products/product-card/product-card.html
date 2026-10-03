@@ -1,0 +1,21 @@
+<article class="card">
+  <a [routerLink]="['/products', product().id]">
+    <img [src]="product().thumbnail" [alt]="product().title" loading="lazy" />
+    <h3>{{ product().title }}</h3>
+  </a>
+
+  <p class="category">{{ product().category }}</p>
+  <!-- Pipe: transforma el valor solo para mostrarlo -->
+  <p class="price">{{ product().price | currency: 'USD' }}</p>
+
+  @if (lowStock()) {
+    <p class="warning">¡Solo quedan {{ product().stock }}!</p>
+  }
+
+  <button (click)="addToCart.emit(product())">
+    Agregar al carrito
+    @if (quantityInCart() > 0) {
+      <span class="badge">{{ quantityInCart() }}</span>
+    }
+  </button>
+</article>

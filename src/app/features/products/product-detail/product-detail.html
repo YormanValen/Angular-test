@@ -1,0 +1,22 @@
+<a routerLink="/products">← Volver</a>
+
+@if (product.isLoading()) {
+  <p class="info">Cargando producto...</p>
+} @else if (product.error()) {
+  <p class="error">No se pudo cargar el producto.</p>
+} @else if (product.hasValue()) {
+  <!-- @let declara una variable local en el template -->
+  @let p = product.value();
+
+  <article class="detail">
+    <img [src]="p.thumbnail" [alt]="p.title" />
+    <div>
+      <h1>{{ p.title }}</h1>
+      <p class="category">{{ p.category }} · ⭐ {{ p.rating }}</p>
+      <p>{{ p.description }}</p>
+      <p class="price">{{ p.price | currency: 'USD' }}</p>
+      <p>Stock: {{ p.stock }}</p>
+      <button (click)="cart.add(p)">Agregar al carrito</button>
+    </div>
+  </article>
+}

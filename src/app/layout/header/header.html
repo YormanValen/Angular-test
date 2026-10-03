@@ -1,0 +1,21 @@
+<header>
+  <a routerLink="/" class="logo">🛍️ Angular Tienda</a>
+
+  <nav>
+    <!-- routerLinkActive agrega la clase "active" cuando la ruta coincide -->
+    <a routerLink="/products" routerLinkActive="active">Productos</a>
+    <a routerLink="/cart" routerLinkActive="active">
+      Carrito
+      @if (cart.totalItems() > 0) {
+        <span class="badge">{{ cart.totalItems() }}</span>
+      }
+    </a>
+
+    @if (auth.isLoggedIn()) {
+      <span class="user">Hola, {{ auth.user()?.firstName }}</span>
+      <button class="link" (click)="auth.logout()">Salir</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active">Entrar</a>
+    }
+  </nav>
+</header>

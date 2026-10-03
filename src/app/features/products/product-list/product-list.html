@@ -1,0 +1,40 @@
+<section class="toolbar">
+  <!-- #search es una "template reference variable": referencia al <input> del DOM -->
+  <input
+    #search
+    type="search"
+    placeholder="Buscar productos..."
+    [value]="searchTerm()"
+    (input)="onSearch(search.value)"
+  />
+
+  <select #category (change)="onCategory(category.value)">
+    <option value="">Todas las categorías</option>
+    @for (cat of categories(); track cat) {
+      <option [value]="cat" [selected]="cat === selectedCategory()">{{ cat }}</option>
+    }
+  </select>
+</section>
+
+<!-- Control flow nativo (@if / @for). Reemplaza a *ngIf / *ngFor, deprecados en v20 -->
+@if (loading()) {
+  <p class="info">Cargando productos...</p>
+} @else if (error()) {
+  <p class="error">Error: {{ error() }}</p>
+} @else {
+  <p class="info">{{ products().length }} productos</p>
+
+  <div class="grid">
+    <!-- track es obligatorio: le dice a Angular cómo identificar cada item -->
+    @for (product of products(); track product.id) {
+      <!-- [input]="valor" pasa datos al hijo; (output)="handler($event)" escucha eventos -->
+      <app-product-card
+        [product]="product"
+        [quantityInCart]="cart.entityMap()[product.id]?.quantity ?? 0"
+        (addToCart)="cart.add($event)"
+      />
+    } @empty {
+      <p>No hay productos que coincidan con la búsqueda.</p>
+    }
+  </div>
+}
