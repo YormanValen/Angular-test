@@ -8,7 +8,7 @@
     (input)="onSearch(search.value)"
   />
 
-  <select #sort >
+  <select #sort (change)="onSort(sort.value)">
     <option value="none">Ninguno</option>
     <option value="asc">Ascendente</option>
     <option value="desc">Descendente</option>
