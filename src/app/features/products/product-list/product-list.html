@@ -9,9 +9,9 @@
   />
 
   <select #sort (change)="onSort(sort.value)">
-    <option value="none">Ninguno</option>
-    <option value="asc">Ascendente</option>
-    <option value="desc">Descendente</option>
+    <option [selected]="currentSort() == 'none'" value="none">Ninguno</option>
+    <option [selected]="currentSort() == 'asc'" value="asc">Ascendente</option>
+    <option [selected]="currentSort() == 'desc'" value="desc">Descendente</option>
   </select>
 
   <select #category (change)="onCategory(category.value)">

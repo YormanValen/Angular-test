@@ -25,6 +25,7 @@ export class ProductList implements OnInit {
   protected readonly loading = this.store.selectSignal(productsFeature.selectLoading);
   protected readonly error = this.store.selectSignal(productsFeature.selectError);
   protected readonly searchTerm = this.store.selectSignal(productsFeature.selectSearchTerm);
+  protected readonly currentSort = this.store.selectSignal(productsFeature.selectSort);
   protected readonly selectedCategory = this.store.selectSignal(
     productsFeature.selectSelectedCategory,
   );
