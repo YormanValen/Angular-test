@@ -4,12 +4,29 @@
   <p class="info">Cargando producto...</p>
 } @else if (product.error()) {
   <p class="error">No se pudo cargar el producto.</p>
+  <!-- reload() repite la petición con la misma URL -->
+  <button (click)="product.reload()">Reintentar</button>
 } @else if (product.hasValue()) {
   <!-- @let declara una variable local en el template -->
   @let p = product.value();
 
   <article class="detail">
-    <img [src]="p.thumbnail" [alt]="p.title" />
+    <div class="gallery">
+      <!-- Imagen grande: la elegida, o el thumbnail si aún no se eligió ninguna -->
+      <img class="main" [src]="selectedImage() ?? p.thumbnail" [alt]="p.title" />
+
+      <div class="thumbs">
+        @for (img of p.images; track img) {
+          <!-- [class.active] agrega la clase CSS "active" solo si la condición es true -->
+          <img
+            [src]="img"
+            [alt]="p.title"
+            [class.active]="img === selectedImage()"
+            (click)="selectedImage.set(img)"
+          />
+        }
+      </div>
+    </div>
     <div>
       <h1>{{ p.title }}</h1>
       <p class="category">{{ p.category }} · ⭐ {{ p.rating }}</p>

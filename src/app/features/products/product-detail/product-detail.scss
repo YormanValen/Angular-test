@@ -11,6 +11,25 @@
     border-radius: 12px;
   }
 
+  .thumbs {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+
+    img {
+      width: 64px;
+      height: 64px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 8px;
+    }
+
+    img.active {
+      border-color: currentColor;
+    }
+  }
+
   .category {
     color: var(--muted);
   }
