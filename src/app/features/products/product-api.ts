@@ -19,4 +19,12 @@ export class ProductApi {
       .get<ProductsResponse>(`${API_URL}/products?limit=40`)
       .pipe(map((response) => response.products));
   }
+
+  getById(id: number): Observable<Product> {
+    // HttpClient devuelve un Observable "frío": la petición se hace
+    // solo cuando alguien se suscribe (en nuestro caso, el Effect de NgRx).
+    return this.http
+      .get<Product>(`${API_URL}/products/${id}`)
+      .pipe(((response) => response));
+  }
 }
