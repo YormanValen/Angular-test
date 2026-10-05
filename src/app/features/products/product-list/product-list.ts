@@ -20,7 +20,7 @@ export class ProductList implements OnInit {
 
   // selectSignal convierte un selector de NgRx en un Signal de solo lectura.
   // En el template se leen llamándolos como función: products()
-  protected readonly products = this.store.selectSignal(productsFeature.selectFilteredProducts);
+  protected readonly products = this.store.selectSignal(productsFeature.selectedSortedProducts);
   protected readonly categories = this.store.selectSignal(productsFeature.selectCategories);
   protected readonly loading = this.store.selectSignal(productsFeature.selectLoading);
   protected readonly error = this.store.selectSignal(productsFeature.selectError);
@@ -40,5 +40,9 @@ export class ProductList implements OnInit {
 
   protected onCategory(category: string): void {
     this.store.dispatch(ProductsPageActions.categorySelected({ category: category || null }));
+  }
+
+  protected onSort(sort: string): void {
+    this.store.dispatch(ProductsPageActions.sortChanged({ sort: sort as 'none' | 'asc' | 'desc' }));
   }
 }

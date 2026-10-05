@@ -8,6 +8,12 @@
     (input)="onSearch(search.value)"
   />
 
+  <select #sort >
+    <option value="none">Ninguno</option>
+    <option value="asc">Ascendente</option>
+    <option value="desc">Descendente</option>
+  </select>
+
   <select #category (change)="onCategory(category.value)">
     <option value="">Todas las categorías</option>
     @for (cat of categories(); track cat) {

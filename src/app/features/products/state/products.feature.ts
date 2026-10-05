@@ -10,6 +10,7 @@ export interface ProductsState extends EntityState<Product> {
   error: string | null;
   searchTerm: string;
   selectedCategory: string | null;
+  sort: string | null;
 }
 
 // El adapter trae funciones para manipular la colección sin mutarla
@@ -21,6 +22,7 @@ const initialState: ProductsState = adapter.getInitialState({
   error: null,
   searchTerm: '',
   selectedCategory: null,
+  sort: 'none'
 });
 
 // createFeature agrupa reducer + selectores. Por cada propiedad del estado
@@ -38,14 +40,17 @@ export const productsFeature = createFeature({
       ...state,
       selectedCategory: category,
     })),
+    on(ProductsPageActions.sortChanged, (state, {sort}) => ({ ...state, sort:sort })),
+
     on(ProductsApiActions.loadSuccess, (state, { products }) =>
       adapter.setAll(products, { ...state, loading: false }),
     ),
     on(ProductsApiActions.loadFailure, (state, { error }) => ({ ...state, loading: false, error })),
+    
   ),
 
   // SELECTORES DERIVADOS: se memorizan, solo se recalculan cuando cambian sus entradas.
-  extraSelectors: ({ selectProductsState, selectSearchTerm, selectSelectedCategory }) => {
+  extraSelectors: ({ selectProductsState, selectSearchTerm, selectSelectedCategory, selectSort }) => {
     const { selectAll } = adapter.getSelectors(selectProductsState);
 
     const selectCategories = createSelector(selectAll, (products) => [
@@ -66,6 +71,18 @@ export const productsFeature = createFeature({
       },
     );
 
-    return { selectAllProducts: selectAll, selectCategories, selectFilteredProducts };
+    const selectedSortedProducts = createSelector(
+      selectFilteredProducts,
+      selectSort,
+      (products, sort) => {
+        if(sort == 'asc'){
+          return [...products].sort((a,b) => a.price - b.price)
+        } else {
+          return [...products].sort((a,b) => b.price - a.price)
+        }
+      }
+    )
+
+    return { selectAllProducts: selectAll, selectCategories, selectFilteredProducts, selectedSortedProducts };
   },
 });

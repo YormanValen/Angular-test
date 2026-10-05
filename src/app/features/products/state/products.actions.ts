@@ -13,6 +13,7 @@ export const ProductsPageActions = createActionGroup({
     Opened: emptyProps(),
     'Search Changed': props<{ term: string }>(),
     'Category Selected': props<{ category: string | null }>(),
+    'Sort Changed': props<{ sort: 'none' | 'asc' | 'desc'}>()
   },
 });
 
