@@ -21,10 +21,7 @@ export class ProductApi {
   }
 
   getById(id: number): Observable<Product> {
-    // HttpClient devuelve un Observable "frío": la petición se hace
-    // solo cuando alguien se suscribe (en nuestro caso, el Effect de NgRx).
-    return this.http
-      .get<Product>(`${API_URL}/products/${id}`)
-      .pipe(((response) => response));
-  }
+  // Este endpoint devuelve el producto directamente (sin sobre), no hace falta map.
+  return this.http.get<Product>(`${API_URL}/products/${id}`);
+}
 }

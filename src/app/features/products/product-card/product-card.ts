@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Product } from '../../../core/models/product';
@@ -8,7 +8,7 @@ import { Product } from '../../../core/models/product';
 // Es fácil de reutilizar y de testear.
 @Component({
   selector: 'app-product-card',
-  imports: [CurrencyPipe, RouterLink],
+  imports: [CurrencyPipe, RouterLink, DecimalPipe],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
 })
@@ -23,4 +23,8 @@ export class ProductCard {
 
   // computed: valor derivado de otros signals; se recalcula solo cuando cambian.
   protected readonly lowStock = computed(() => this.product().stock < 10);
+
+  //computed para validar si tiene descuento 
+  protected readonly hasDiscount = computed(() => this.product().discountPercentage > 10);
+
 }

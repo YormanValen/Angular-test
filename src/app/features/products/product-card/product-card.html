@@ -8,6 +8,10 @@
   <!-- Pipe: transforma el valor solo para mostrarlo -->
   <p class="price">{{ product().price | currency: 'USD' }}</p>
 
+  @if(hasDiscount()){
+    <p class="warning"> - {{ product().discountPercentage | number: '1.0-0'}}% OFF</p>
+  }
+
   @if (lowStock()) {
     <p class="warning">¡Solo quedan {{ product().stock }}!</p>
   }
